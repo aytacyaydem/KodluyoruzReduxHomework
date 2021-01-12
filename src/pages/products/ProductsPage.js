@@ -2,36 +2,21 @@ import {SafeAreaView, View, Text, FlatList,Button,TouchableOpacity,ScrollView } 
 import axios from 'axios';
 import React, {useState,useEffect} from 'react';
 import {ProductsItem} from './components';
+import {useFetch} from "../../hooks/useFetch"
 
+let API_URL = "https://fakestoreapi.com/products"
 
-const api_url = 'https://fakestoreapi.com/products';
 function ProductsPage(props) {
-  const [productList, setproductList] = useState([]);
-
+  const [url,setURL] = useState("https://fakestoreapi.com/products")
+  const {data,error,loading,fetchData} = useFetch(url)
   
-
-  async function fetchData() {
-    const {data} = await axios.get(
-      'https://fakestoreapi.com/products',
-    );
-    setproductList(data);
-    //console.log(productList)
-    
-  }
-
-
-  async function fetchData1(name) {
-    const {data} = await axios.get(
-      ` https://fakestoreapi.com/products/category/${name}`,
-    );
-    setproductList(data);
-    //console.log(data)
-    
-  }
-
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [url]);
+
+  function handleURL (endpoint) {
+      setURL(endpoint ?  `${API_URL}/category/${endpoint}` : API_URL)
+  }
 
   const renderProduct = ({item}) =>      <ProductsItem category={item} 
   onSelect={() => props.navigation.navigate('Detalis', {id: item.id})}
@@ -44,41 +29,40 @@ function ProductsPage(props) {
               <View style={{ flexDirection: 'row' ,justifyContent: 'center'}}>
                 <View style={{ width: '60%',height: 20 ,}}>
                     <Button  color="#3d6358"
-                     title="electronics" onPress={() => fetchData1('electronics')}/>
+                     title="electronics" onPress={() => handleURL('electronics')}/>
                  
                    
                 </View>
                 <View style={{ width: '60%',height: 30 }}>
                     <Button color="#3d6358"
-                        title="jewelery"  onPress={() => fetchData1('jewelery')}/>
+                        title="jewelery"  onPress={() => handleURL('jewelery')}/>
                 </View>
               </View>
             <View style={{ flexDirection: 'row' ,justifyContent: 'center'}}>
                 <View style={{ width: '60%',height: 20 }}>
                       <Button color="#3d6358"
-                        title="men clothing" onPress={() => fetchData1('men clothing')}/>
+                        title="men clothing" onPress={() => handleURL('men clothing')}/>
                 </View>
                 <View style={{ width: '60%',height: 30 }}>
                       <Button color="#3d6358"
-                        title="women clothing" onPress={() => fetchData1('women clothing')}/>
+                        title="women clothing" onPress={() => handleURL('women clothing')}/>
                 </View>
                   
             </View>
             <View style={{ width: '100%',height: 30 }}>
                       <Button color="#3d6358"
-                        title="ALL Category" onPress={() => fetchData()}/>
+                        title="ALL Category" onPress={() => handleURL("")}/>
             </View>
               
         <FlatList
           keyExtractor={(item) => item.id.toString()}
-          data={productList}
+          data={data}
           renderItem={renderProduct}
         />
         
        
       </View>
       </SafeAreaView>
-  
 
       );
     }
