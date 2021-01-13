@@ -21,9 +21,9 @@ function App() {
   return (
     <MainProvider>
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Main" component={MainPages} />
+      <Tab.Navigator initialRouteName="Main">
         <Tab.Screen name="Favorite" component={FavoritePage} />
+        <Tab.Screen name="Main" component={MainPages} />
         <Tab.Screen name="Cart" component={CartPage} />
       </Tab.Navigator>
     </NavigationContainer>
