@@ -1,13 +1,19 @@
-import {View, Text} from 'react-native';
+import {View, Text,FlatList} from 'react-native';
 import {useSelector} from "react-redux"
 
 import React from 'react';
 
 function CartPage(props) {
     const myCart = useSelector(state => state.cart)
+
+    const renderCart = ({item}) => <Text>{item.title}</Text>;
     return (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-           { myCart.map(item  => <Text>{item.title}</Text>)}
+            <FlatList
+                keyExtractor={(_, i) => i.toString()}
+                data={myCart}
+                renderItem={renderCart}
+                />
           </View>
        
       );

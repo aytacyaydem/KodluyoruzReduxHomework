@@ -5,6 +5,9 @@ function reducer (state,action) {
             return {...state,cart:[...state.cart,action.payload]}
         case actionTypes.ADD_FAVORITE:
             return {...state,favorites :[...state.favorites,action.payload] }
+        case actionTypes.DELETE_FAVORITE:
+            return {...state,favorites: state.favorites.filter(favorites=> favorites.id !== action.payload) }
+            console.log(favorites)
         default:
             return state
     }

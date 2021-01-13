@@ -17,7 +17,7 @@ function DetalisPage(props) {
       ` https://fakestoreapi.com/products/${id}`,
     );
     setProductDetail(data);
-    console.log(data)
+    console.log(data) 
 
     
   }
