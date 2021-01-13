@@ -6,9 +6,11 @@ import {cart_page_styles} from "../../styles/page_styles"
 import CartItem from "./components/CartItem"
 import CartHeader from "./components/CartHeader"
 import CartFooter from "./components/CartFooter"
+import LottieView from 'lottie-react-native';
 
 function CartPage(props) {
     const myCart = useSelector(state => state.cart)
+    const [success,setSuccess] = React.useState(false)
     {console.log(myCart)}
 
     function renderItem({item}) {
@@ -27,20 +29,33 @@ function CartPage(props) {
         return 0;
       }
     }
+
+    function handleSuccess(){
+      setSuccess(!success)
+    }
     
     return (
           <View style={cart_page_styles.container}>
-            <View style={cart_page_styles.cart}>
+            {!success && <View style={cart_page_styles.cart}>
               <FlatList data={myCart} renderItem={renderItem} keyExtractor={(_,index) => index.toString()} ListHeaderComponent={<CartHeader />} 
               ListFooterComponent={
                 myCart.length > 0 ? (
                   <View>
-                    <CartFooter totalPrice={cartSummary()} />
+                    <CartFooter totalPrice={cartSummary()} onSuccess={handleSuccess}/>
                   </View>
                 ) : (null)
               }
               />
+            </View>}
+            {success && (
+              <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+            <LottieView source={require("../../assets/animations/success.json")} autoPlay style={{flex:1,justifyContent:"center",alignItems:"center"}} loop={false} onAnimationFinish={handleSuccess}
+            />
+              <Text style={{fontSize:27,marginTop:150,color:"#7da453",fontWeight:"bold"}}>Tebrikler! Satın Aldınız.</Text>
             </View>
+            )
+            
+            }
           </View>
        
       );
