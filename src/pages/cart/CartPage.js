@@ -31,9 +31,15 @@ function CartPage(props) {
     return (
           <View style={cart_page_styles.container}>
             <View style={cart_page_styles.cart}>
-              <FlatList data={myCart} renderItem={renderItem} keyExtractor={(_,index) => index.toString()} ListHeaderComponent={<CartHeader />} ListFooterComponent={
-                <CartFooter totalPrice={cartSummary()} />
-              } />
+              <FlatList data={myCart} renderItem={renderItem} keyExtractor={(_,index) => index.toString()} ListHeaderComponent={<CartHeader />} 
+              ListFooterComponent={
+                myCart.length > 0 ? (
+                  <View>
+                    <CartFooter totalPrice={cartSummary()} />
+                  </View>
+                ) : (null)
+              }
+              />
             </View>
           </View>
        

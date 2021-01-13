@@ -6,6 +6,9 @@ const screenSize = Dimensions.get("window")
 const cart_page_styles = StyleSheet.create({
     container : {
         flex : 1,
+    },
+    cart : {
+        flex:1
     }
 })
 

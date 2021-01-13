@@ -60,7 +60,7 @@ const cart_footer_styles = StyleSheet.create({
         alignItems:"center",
         paddingHorizontal:10,
         paddingVertical:30,
-        backgroundColor:"#7da453"
+        backgroundColor:"#7da453",
     },
     priceText : {
         fontSize:18,
