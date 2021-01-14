@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, View, Text, Image, TouchableOpacity,Button} from 'react-native';
 import {favorite_item} from './styles';
 
+
 const FavoriteItem = ({product,onSelect}) => {
   
     return (

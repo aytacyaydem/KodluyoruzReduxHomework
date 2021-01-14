@@ -8,6 +8,7 @@ function CartHeader(){
         <View style={cart_header_styles.container}>
             <Text style={cart_header_styles.headerText}>My Cart</Text>
             <Icon name="cart" size={30} color="black" />
+            
         </View>
     )
 }

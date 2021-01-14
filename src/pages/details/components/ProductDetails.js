@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image} from 'react-native';
 import {Details_styles} from './styles';
 
+
 const ProductDetails = ({detail}) => {
    
     return (

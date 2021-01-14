@@ -11,7 +11,7 @@ import LottieView from 'lottie-react-native';
 function CartPage(props) {
     const myCart = useSelector(state => state.cart)
     const [success,setSuccess] = React.useState(false)
-    {console.log(myCart)}
+    //{console.log(myCart)}
 
     function renderItem({item}) {
       return (  
