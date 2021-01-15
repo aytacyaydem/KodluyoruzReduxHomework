@@ -49,8 +49,7 @@ const cart_header_styles = StyleSheet.create({
         fontSize:25,
         fontWeight:"bold",
         color:"#338a3e"
-
-    }
+    },
 })
 
 const cart_footer_styles = StyleSheet.create({

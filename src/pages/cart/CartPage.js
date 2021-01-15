@@ -1,65 +1,149 @@
 import React from 'react';
-import {View, Text,FlatList} from 'react-native';
-import {useSelector} from "react-redux"
-
-import {cart_page_styles} from "../../styles/page_styles"
-import CartItem from "./components/CartItem"
-import CartHeader from "./components/CartHeader"
-import CartFooter from "./components/CartFooter"
+import {View, Text, FlatList,Dimensions, SectionList} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {cart_page_styles} from '../../styles/page_styles';
+import CartItem from './components/CartItem';
+import CartHeader from './components/CartHeader';
+import CartFooter from './components/CartFooter';
 import LottieView from 'lottie-react-native';
+import * as actionTypes from '../../redux/actionTypes';
+import Modal from 'react-native-modal';
+import delay from "delay"
+
+const deviceSize = Dimensions.get("window")
 
 function CartPage(props) {
-    const myCart = useSelector(state => state.cart)
-    const [success,setSuccess] = React.useState(false)
-    //{console.log(myCart)}
+  const myCart = useSelector((state) => state.cart);
+  const [showModal,setShowModal] = React.useState(false)
+  const dispatch = useDispatch();
+  const [success, setSuccess] = React.useState(false);
+  //{console.log(myCart)}
 
-    function renderItem({item}) {
-      return (  
-        <CartItem data={item}/>
-      )
+  function renderItem({item}) {
+    return <CartItem data={item} />;
+  }
+
+  function cartSummary() {
+    if (myCart.length > 0) {
+      let total = myCart.reduce((acc, currentItem) => {
+        return acc + currentItem.price;
+      }, 0);
+      return total;
+    } else {
+      return 0;
     }
-    
-    function cartSummary(){
-      if(myCart.length > 0){
-        let total = myCart.reduce((acc,currentItem) => {
-          return acc + currentItem.price
-        },0)
-        return total
-      }else {
-        return 0;
+  }
+
+  function openModal(){
+    setShowModal(true)
+  }
+
+  function closeModal(){
+    setShowModal(false)
+  }
+
+  async function handleSuccess() {
+    try {
+      let totalPrice = cartSummary();
+      console.log("Total Price: ",totalPrice)
+      const existingHistory = await AsyncStorage.getItem('buyHistory');
+      let newHistory = JSON.parse(existingHistory);
+      if (!newHistory) {
+        newHistory = [];
       }
-    }
+      newHistory.push({...myCart,totalPrice});
+      await AsyncStorage.setItem('buyHistory', JSON.stringify(newHistory))
+        .then(() => console.log('save is successful'))
+        .catch(() => console.log('there was an error on save'));
 
-    function handleSuccess(){
-      setSuccess(!success)
+      dispatch({type: actionTypes.PAYMENT_SUCCESS});
+      setSuccess(!success);
+    } catch (e) {
+      console.log(e);
     }
-    
-    return (
-          <View style={cart_page_styles.container}>
-            {!success && <View style={cart_page_styles.cart}>
-              <FlatList data={myCart} renderItem={renderItem} keyExtractor={(_,index) => index.toString()} ListHeaderComponent={<CartHeader />} 
-              ListFooterComponent={
-                myCart.length > 0 ? (
-                  <View>
-                    <CartFooter totalPrice={cartSummary()} onSuccess={handleSuccess}/>
-                  </View>
-                ) : (null)
-              }
-              />
-            </View>}
-            {success && (
-              <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-            <LottieView source={require("../../assets/animations/success.json")} autoPlay style={{flex:1,justifyContent:"center",alignItems:"center"}} loop={false} onAnimationFinish={handleSuccess}
-            />
-              <Text style={{fontSize:27,marginTop:150,color:"#7da453",fontWeight:"bold"}}>Tebrikler! Satın Aldınız.</Text>
-            </View>
-            )
-            
+  }
+
+  async function readStorage(){
+    try{
+      const jsonValue = await AsyncStorage.getItem("buyHistory");
+      let parsed = jsonValue !== null ? JSON.parse(jsonValue) : null
+      console.log(parsed)
+    }catch(e) {
+      console.log(e)
+    }
+  }
+
+  async function handleFinishAnimation(){
+    await delay(2000);
+    setSuccess(!success)
+  }
+
+  React.useEffect(() => {
+    readStorage()
+  },[])
+
+  return (
+    <>
+    <View style={cart_page_styles.container}>
+      {!success && (
+        <View style={cart_page_styles.cart}>
+          <FlatList
+            data={myCart}
+            renderItem={renderItem}
+            keyExtractor={(_, index) => index.toString()}
+            ListHeaderComponent={<CartHeader onModal={openModal} />}
+            ListFooterComponent={
+              myCart.length > 0 ? (
+                <View>
+                  <CartFooter
+                    totalPrice={cartSummary()}
+                    onSuccess={handleSuccess}
+                  />
+                </View>
+              ) : null
             }
-          </View>
-       
-      );
-    }
+            ListEmptyComponent={
+              <View style={{flex: 1, justifyContent: 'center'}}>
+                <Text
+                  style={{color: 'gray', fontSize: 24, alignSelf: 'center'}}>
+                  Henüz sepetinizde ürün yok.
+                </Text>
+              </View>
+            }
+            contentContainerStyle={{flexGrow: 1}}
+          />
+        </View>
+      )}
+      {success && (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <LottieView
+            source={require('../../assets/animations/success.json')}
+            autoPlay
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+            loop={false}
+            onAnimationFinish={handleFinishAnimation}
+          />
+          <Text
+            style={{
+              fontSize: 27,
+              marginTop: 150,
+              color: '#7da453',
+              fontWeight: 'bold',
+            }}>
+            Tebrikler! Satın Aldınız.
+          </Text>
+        </View>
+      )}
+    </View>
+    <Modal isVisible={showModal} onBackdropPress={closeModal} coverScreen={true} style={{margin:0}}>
+        <View style={{backgroundColor:"white",height:deviceSize.height / 1.5,position:"absolute",bottom:0,right:0,left:0}}>
+          <Text>I am the modal content!</Text>
+        </View>
+    </Modal>
+    </>
+  );
+}
 export {CartPage};
 
 /* 
