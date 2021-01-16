@@ -10,9 +10,9 @@ const Stack = createStackNavigator();
 
 function MainPages() {
   return (
-    <Stack.Navigator screenOptions={{header: () => null}}>
-      <Stack.Screen name="Products" component={ProductsPage} />
-      <Stack.Screen name="Detalis" component={DetalisPage} />
+    <Stack.Navigator>
+      <Stack.Screen name="Products" component={ProductsPage} options={{headerShown:false}}/>
+      <Stack.Screen name="Detalis" component={DetalisPage} options={{title:"Details"}} />
     </Stack.Navigator>
   );
 }

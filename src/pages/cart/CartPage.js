@@ -142,13 +142,13 @@ function CartPage(props) {
         <ScrollView style={{flex:1,backgroundColor:"white",height:deviceSize.height / 1.5,position:"absolute",bottom:0,right:0,left:0}}
         showsVerticalScrollIndicator={false}
         >
-          {history?.map((history,index) => {
+          {history && history.map((history,index) => {
             return ( 
               <View key={index}>
                 <Text style={{marginLeft:10,fontSize:15,marginTop:10}}>{index+1} numaralı siparişiniz</Text>
                 <View style={{borderWidth:1,margin:10,padding:10}}>
                   <View style={{borderBottomWidth:1,borderColor:"gray",paddingBottom:10,marginBottom:10}}>
-                {history?.products.map(product => {
+                {history.products.map(product => {
                   return (
                     <View key={product.id}>
                     <View style={{borderBottomColor:"gray",}}>
