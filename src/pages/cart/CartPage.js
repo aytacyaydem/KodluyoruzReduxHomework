@@ -148,7 +148,7 @@ function CartPage(props) {
                 <Text style={{marginLeft:10,fontSize:15,marginTop:10}}>{index+1} numaralı siparişiniz</Text>
                 <View style={{borderWidth:1,margin:10,padding:10}}>
                   <View style={{borderBottomWidth:1,borderColor:"gray",paddingBottom:10,marginBottom:10}}>
-                {history.products.map(product => {
+                {history && history.products.map(product => {
                   return (
                     <View key={product.id}>
                     <View style={{borderBottomColor:"gray",}}>
