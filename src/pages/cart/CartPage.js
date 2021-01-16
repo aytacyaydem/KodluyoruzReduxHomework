@@ -61,6 +61,7 @@ function CartPage(props) {
 
       dispatch({type: actionTypes.PAYMENT_SUCCESS});
       setSuccess(!success);
+      readStorage()
     } catch (e) {
       console.log(e);
     }
