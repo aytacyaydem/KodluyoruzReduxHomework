@@ -10,6 +10,7 @@ import LottieView from 'lottie-react-native';
 import * as actionTypes from '../../redux/actionTypes';
 import Modal from 'react-native-modal';
 import delay from "delay"
+import { ScrollView } from 'react-native-gesture-handler';
 
 const deviceSize = Dimensions.get("window")
 
@@ -18,6 +19,7 @@ function CartPage(props) {
   const [showModal,setShowModal] = React.useState(false)
   const dispatch = useDispatch();
   const [success, setSuccess] = React.useState(false);
+  const [history,setHistory] = React.useState(null)
   //{console.log(myCart)}
 
   function renderItem({item}) {
@@ -52,7 +54,7 @@ function CartPage(props) {
       if (!newHistory) {
         newHistory = [];
       }
-      newHistory.push({history:myCart,totalPrice});
+      newHistory.push({products:myCart,totalPrice});
       await AsyncStorage.setItem('buyHistory', JSON.stringify(newHistory))
         .then(() => console.log('save is successful'))
         .catch(() => console.log('there was an error on save'));
@@ -68,7 +70,7 @@ function CartPage(props) {
     try{
       const jsonValue = await AsyncStorage.getItem("buyHistory");
       let parsed = jsonValue !== null ? JSON.parse(jsonValue) : null
-      console.log(parsed)
+      setHistory(parsed)
     }catch(e) {
       console.log(e)
     }
@@ -136,10 +138,33 @@ function CartPage(props) {
         </View>
       )}
     </View>
-    <Modal isVisible={showModal} onBackdropPress={closeModal} coverScreen={true} style={{margin:0}}>
-        <View style={{backgroundColor:"white",height:deviceSize.height / 1.5,position:"absolute",bottom:0,right:0,left:0}}>
-          <Text>I am the modal content!</Text>
-        </View>
+    <Modal isVisible={showModal} onBackdropPress={closeModal} style={{margin:0}} animationIn="bounceInUp" animationInTiming={500}>
+        <ScrollView style={{flex:1,backgroundColor:"white",height:deviceSize.height / 1.5,position:"absolute",bottom:0,right:0,left:0}}
+        showsVerticalScrollIndicator={false}
+        >
+          {history?.map((history,index) => {
+            return ( 
+              <View key={index}>
+                <Text style={{marginLeft:10,fontSize:15,marginTop:10}}>{index+1} numaralı kayıt</Text>
+                <View style={{borderWidth:1,margin:10,padding:10}}>
+                  <View style={{borderBottomWidth:1,borderColor:"gray",paddingBottom:10,marginBottom:10}}>
+                {history?.products.map(product => {
+                  return (
+                    <View key={product.id}>
+                    <View style={{borderBottomColor:"gray",}}>
+                    <Text style={{fontWeight:"bold",fontSize:16}}>{product.title}</Text>
+                    <Text style={{alignSelf:"flex-end"}}>Fiyat: {product.price} TL</Text>
+                    </View>
+                    </View>
+                  )
+                })}   
+                </View>
+                <Text style={{alignSelf:"flex-end",fontWeight:"bold",fontSize:16}}>Toplam Fiyat: {history.totalPrice} TL</Text>
+              </View>
+              </View>
+            )
+          })}
+        </ScrollView>
     </Modal>
     </>
   );
