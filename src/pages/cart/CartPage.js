@@ -52,7 +52,7 @@ function CartPage(props) {
       if (!newHistory) {
         newHistory = [];
       }
-      newHistory.push({...myCart,totalPrice});
+      newHistory.push({history:myCart,totalPrice});
       await AsyncStorage.setItem('buyHistory', JSON.stringify(newHistory))
         .then(() => console.log('save is successful'))
         .catch(() => console.log('there was an error on save'));
