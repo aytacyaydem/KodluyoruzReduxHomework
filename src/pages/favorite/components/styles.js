@@ -41,6 +41,19 @@ const favorite_item = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10,
       },
+      container : {
+        padding:10,
+        borderBottomColor:"black",
+        borderBottomWidth:1,
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:"center"
+    },
+    headerText : {
+        fontSize:25,
+        fontWeight:"bold",
+        color:"#338a3e"
+    },
     
 });
 

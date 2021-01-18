@@ -11,16 +11,40 @@ const cart_page_styles = StyleSheet.create({
         flex:1
     }
 })
-
-export {cart_page_styles}
-
-/* 
-{
-"category": "men clothing", 
-"description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday", 
-"id": 1, 
-"image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg", 
-"price": 109.95, 
-"title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
-}
-*/
+const styles = StyleSheet.create({
+    categoryContainer: {
+      flexDirection: 'row',
+      width: '90%',
+      alignSelf: 'center',
+      marginTop:10,
+      marginBottom: 5,
+    },
+    categoryBtn: {
+      flex: 1,
+      width: '30%',
+      marginHorizontal: 0,
+      alignSelf: 'center',
+    },
+    categoryIcon: {
+      borderWidth: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignSelf: 'center',
+      width: 50,
+      height: 50,
+      backgroundColor: '#3d6358' /* '#FF6347' */,
+      borderRadius: 50,
+    },
+    categoryBtnTxt: {
+      alignSelf: 'center',
+      marginTop: 5,
+      color: 'black',
+      fontWeight: 'bold',
+      fontSize: 15,
+    },
+    ViewContainer: {
+      backgroundColor: '#e0e0e0',
+      flex:1,
+      },
+  });
+export {cart_page_styles,styles}

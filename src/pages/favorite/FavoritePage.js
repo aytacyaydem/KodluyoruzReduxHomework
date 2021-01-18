@@ -4,6 +4,7 @@ import * as actionTypes from "../../redux/actionTypes"
 import {useDispatch,useSelector} from "react-redux"
 import {FavoriteItem} from './components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {FavoriteHeader} from './components';
 
 function FavoritePage(props) {
   const myFavorites = useSelector(state => state.favorites)
@@ -16,11 +17,9 @@ function FavoritePage(props) {
       let jsonValue = await AsyncStorage.getItem(String(i))
       if (jsonValue != null){
       let parsed = JSON.parse(jsonValue);
-      console.log('jsonValue') 
-      console.log(parsed)  
       dispatch({type:actionTypes.ADD_FAVORITE,payload:parsed}) }
     } catch(e) {
-      // error reading value
+      
     }
   }
   }
@@ -33,12 +32,12 @@ function FavoritePage(props) {
   const renderFavorites = ({item}) => <FavoriteItem product={item} onSelect={() =>  {dispatch({type:actionTypes.DELETE_FAVORITE,payload:item.id}), AsyncStorage.removeItem(String(item.id));}}/>;
     return (     
           <View style={{ flex:1}}>
+            <FavoriteHeader />
                 <FlatList
                 keyExtractor={(_, i) => i.toString()}
                 data={myFavorites}
                 renderItem={renderFavorites}
                 />
-            
           </View>
         
       );

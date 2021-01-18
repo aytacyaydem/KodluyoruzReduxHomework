@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList,Dimensions, SectionList} from 'react-native';
+import {View, Text, FlatList,Dimensions, SectionList,Button} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {cart_page_styles} from '../../styles/page_styles';
@@ -20,7 +20,7 @@ function CartPage(props) {
   const dispatch = useDispatch();
   const [success, setSuccess] = React.useState(false);
   const [history,setHistory] = React.useState(null)
-  //{console.log(myCart)}
+
 
   function renderItem({item}) {
     return <CartItem data={item} />;
@@ -63,7 +63,7 @@ function CartPage(props) {
       setSuccess(!success);
       readStorage()
     } catch (e) {
-      console.log(e);
+      
     }
   }
 
@@ -85,6 +85,12 @@ function CartPage(props) {
   React.useEffect(() => {
     readStorage()
   },[])
+
+  
+  function Clear(){
+    AsyncStorage.removeItem("buyHistory");
+    readStorage()
+  }
 
   return (
     <>
@@ -143,8 +149,10 @@ function CartPage(props) {
         <ScrollView style={{flex:1,backgroundColor:"white",height:deviceSize.height / 1.5,position:"absolute",bottom:0,right:0,left:0}}
         showsVerticalScrollIndicator={false}
         >
+          <Button color="#3d6358" title="Clear History" onPress={() => Clear()}/>
           {history && history.map((history,index) => {
             return ( 
+              
               <View key={index}>
                 <Text style={{marginLeft:10,fontSize:15,marginTop:10}}>{index+1} numaralı siparişiniz</Text>
                 <View style={{borderWidth:1,margin:10,padding:10}}>
@@ -165,20 +173,11 @@ function CartPage(props) {
               </View>
             )
           })}
+         
         </ScrollView>
+        
     </Modal>
     </>
   );
 }
 export {CartPage};
-
-/* 
-{
-"category": "men clothing", 
-"description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday", 
-"id": 1, 
-"image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg", 
-"price": 109.95, 
-"title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
-}
-*/
