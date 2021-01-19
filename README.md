@@ -1,11 +1,12 @@
 # Alışveriş Uygulaması
-
-
-Kodluyoruz.Org React Native Web API Homework 
+ 
 <div>
-<img src="https://user-images.githubusercontent.com/53537335/103305677-ccc60000-4a1c-11eb-8b5f-6a47b05dd56c.png" height="600" width="300"/>
-<img src="https://user-images.githubusercontent.com/53537335/103305833-3a722c00-4a1d-11eb-8fd2-a0a9167e4222.png" height="600" width="300" />
-<img src="https://user-images.githubusercontent.com/53537335/103305914-67264380-4a1d-11eb-8c34-d6338a20523d.png" height="600" width="300" />
+<img src="https://user-images.githubusercontent.com/53537335/105036390-7709d400-5a6d-11eb-909b-b2838b29527c.png" height="600" width="300"/>
+<img src="https://user-images.githubusercontent.com/53537335/105036400-796c2e00-5a6d-11eb-86cc-5933a236fd36.png" height="600" width="300" />
+<img src="https://user-images.githubusercontent.com/53537335/105036405-7bce8800-5a6d-11eb-83bc-e1212b1fc670.png" height="600" width="300" />
+<img src="https://user-images.githubusercontent.com/53537335/105036410-7cffb500-5a6d-11eb-8b84-c752926a79a2.png" height="600" width="300" />
+<img src="https://user-images.githubusercontent.com/53537335/105036415-7e30e200-5a6d-11eb-86dc-a82651eb990a.png" height="600" width="300" />
+<img src="https://user-images.githubusercontent.com/53537335/105036428-81c46900-5a6d-11eb-995e-ed8941fe6109.png" height="600" width="300" />
 </div>
 
 
