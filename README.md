@@ -1,5 +1,15 @@
 # Alışveriş Uygulaması
 
+
+Kodluyoruz.Org React Native Web API Homework 
+<div>
+<img src="https://user-images.githubusercontent.com/53537335/103305677-ccc60000-4a1c-11eb-8b5f-6a47b05dd56c.png" height="600" width="300"/>
+<img src="https://user-images.githubusercontent.com/53537335/103305833-3a722c00-4a1d-11eb-8fd2-a0a9167e4222.png" height="600" width="300" />
+<img src="https://user-images.githubusercontent.com/53537335/103305914-67264380-4a1d-11eb-8c34-d6338a20523d.png" height="600" width="300" />
+</div>
+
+
+
 Kullanıcıların ürün satın alabildiği bir uygulamaya ihtiyaç bulunmaktadır.<br />
 
 Kullanıcılar uygulamanın açılış sayfasında sistemde bulunan tüm ürünleri toplu olarak görebilecek, isterse kategorilere göre ürün filtreleme işlemi yapabilecektir. Ürünler kategoriye göre dinamik olarak filtrelenecek ve ana sayfadaki listede güncellencektir. Kategoriler sistemden direkt olarak alınabilir.
